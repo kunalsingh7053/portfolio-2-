@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+}
+
+html,body,#root{height:100%;}
+
+/* Default (light) theme - keep body transparent so `.site-bg` is visible */
+body{
+  background: transparent;
+  @apply text-slate-900 antialiased;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+/* Dark theme when `dark` class is present on <html> */
+html.dark body{
+  @apply bg-gradient-to-br from-[#0f172a] via-[#0b1220] to-[#071226] text-slate-100;
+}
+
+/* Smooth color transitions for theme changes */
+html, body, .glass, .container, .bg-shapes span {
+  transition: background-color 320ms ease, color 320ms ease, border-color 320ms ease, opacity 320ms ease;
+}
+
+/* Native smooth scrolling fallback when Lenis isn't ready */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Back to top button */
+.back-to-top{
+  position: fixed;
+  right: 18px;
+  bottom: 24px;
+  z-index: 60;
+  width: 44px;
+  height: 44px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius: 9999px;
+  background: rgba(0,0,0,0.06);
+  color: inherit;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+  opacity: 0; transform: translateY(10px) scale(0.95); pointer-events: none;
+  transition: transform 220ms ease, opacity 220ms ease, background-color 180ms ease;
+}
+.back-to-top svg{width:18px;height:18px}
+.back-to-top--visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+
+/* Light / Dark variants */
+html.dark .back-to-top{ background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); }
+.back-to-top:hover{ background: rgba(0,0,0,0.09); }
+html.dark .back-to-top:hover{ background: rgba(255,255,255,0.12); }
+
+/* Primary fixed background layer (visible and high-contrast) */
+.site-bg{
+  position: fixed; inset:0; z-index:-20; pointer-events:none;
+  background: radial-gradient(900px 500px at 10% 10%, rgba(139,92,246,0.12), transparent 12%),
+              radial-gradient(700px 350px at 90% 90%, rgba(6,182,212,0.10), transparent 12%),
+              linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Dark variant for background */
+html.dark .site-bg{
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(139,92,246,0.12), transparent 12%),
+              radial-gradient(1000px 500px at 90% 90%, rgba(6,182,212,0.10), transparent 12%),
+              linear-gradient(180deg, #071226 0%, #071026 60%, #031226 100%);
+}
+
+/* Slight noise layer to add texture */
+.site-bg::after{
+  content: '';
+  position: absolute; inset:0; z-index:0; pointer-events:none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' opacity='0.02'><rect width='120' height='120' fill='%23000000'/></svg>");
+  mix-blend-mode:overlay;
+  opacity:0.06;
+}
+
+/* glass card */
+.glass {
+  /* light theme glass */
+  background: linear-gradient(135deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));
+  border: 1px solid rgba(0,0,0,0.06);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* dark theme glass */
+html.dark .glass {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* animated floating shapes */
+.bg-shapes{
+  position: absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+}
+.bg-shapes span{
+  position:absolute; display:block; width:220px; height:220px; border-radius:40px; opacity:0.12; mix-blend-mode:screen; filter: blur(30px);
+}
+
+/* small responsive helper */
+.container{max-width:1100px;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}
