@@ -50,51 +50,59 @@ export default function Contact() {
         </div>
 
         {/* CONTACT FORM — NETLIFY READY */}
-        <motion.form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="space-y-3"
-        >
-          {/* Netlify hidden input */}
-          <input type="hidden" name="form-name" value="contact" />
+       <section id="contact-me">
 
-          <input
-            required
-            name="name"
-            placeholder="Your name"
-            className="w-full p-3 rounded-md bg-black/10 dark:bg-white/10 text-slate-900 dark:text-slate-100"
-          />
+  <form 
+    name="contact" 
+    method="POST" 
+    data-netlify="true"
+    className="space-y-4"
+  >
+    {/* Netlify Hidden Input */}
+    <input type="hidden" name="form-name" value="contact" />
 
-          <input
-            required
-            name="email"
-            type="email"
-            placeholder="Email"
-            className="w-full p-3 rounded-md bg-black/10 dark:bg-white/10 text-slate-900 dark:text-slate-100"
-          />
+    <p className="flex flex-col gap-1">
+      <label className="text-sm font-medium">Your Name:</label>
+      <input 
+        type="text" 
+        name="name" 
+        required
+        className="p-2 rounded-md bg-black/10 dark:bg-white/10"
+      />
+    </p>
 
-          <textarea
-            required
-            name="message"
-            placeholder="Message"
-            rows={4}
-            className="w-full p-3 rounded-md bg-black/10 dark:bg-white/10 text-slate-900 dark:text-slate-100"
-          />
+    <p className="flex flex-col gap-1">
+      <label className="text-sm font-medium">Your Email:</label>
+      <input 
+        type="email" 
+        name="email" 
+        required
+        className="p-2 rounded-md bg-black/10 dark:bg-white/10"
+      />
+    </p>
 
-          <div className="flex items-center gap-3">
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-md bg-accent text-black font-medium"
-            >
-              Send Message
-            </button>
-            {sent && <div className="text-sm text-green-400">Message sent ✔</div>}
-          </div>
-        </motion.form>
+    <p className="flex flex-col gap-1">
+      <label className="text-sm font-medium">Message:</label>
+      <textarea 
+        name="message" 
+        required
+        className="p-2 rounded-md bg-black/10 dark:bg-white/10 h-28"
+      />
+    </p>
+
+    <p>
+      <button 
+        type="submit"
+        className="px-4 py-2 rounded-md bg-accent text-black font-medium hover:scale-105 transition"
+      >
+        Send
+      </button>
+    </p>
+  </form>
+
+  <div id="responseMessage" style={{display: "none"}}></div>
+</section>
+
       </div>
 
       {/* GOOGLE MAP */}
