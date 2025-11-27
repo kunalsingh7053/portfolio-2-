@@ -1,7 +1,4 @@
-# Kunal Patel — Portfolio (React + Tailwind)
 
-This is a modern, animated portfolio built with React, Vite, TailwindCSS and Framer Motion.
-<!-- Google Sign-In and Stripe Checkout integration notes were removed per user's request. The site focuses on showcasing skills and projects. -->
 # Kunal Patel — Portfolio (React + Tailwind)
 
 This is a modern, animated portfolio built with React, Vite, TailwindCSS and Framer Motion.
