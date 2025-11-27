@@ -1,14 +1,15 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiPhone, FiMail, FiMapPin, FiLinkedin, FiGithub } from 'react-icons/fi'
 
-export default function Contact(){
-  const [sent,setSent] = useState(false)
-  const handleSubmit = (e)=>{
-    e.preventDefault();
-    setSent(true);
-    setTimeout(()=>setSent(false),3000)
+export default function Contact() {
+  const [sent, setSent] = useState(false)
+
+  const handleSubmit = () => {
+    setSent(true)
+    setTimeout(() => setSent(false), 3000)
   }
+
   return (
     <section id="contact" className="mt-12 glass p-6 rounded-2xl">
       <h3 className="text-xl font-semibold mb-4">Contact</h3>
@@ -16,11 +17,17 @@ export default function Contact(){
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* CONTACT INFO */}
         <div>
-          <div className="flex items-center gap-3"><FiPhone /> <span className="text-sm">+91-8823047856</span></div>
-          <div className="flex items-center gap-3 mt-2"><FiMail /> <span className="text-sm">kunalsingh7053patel@gmail.com</span></div>
-          <div className="flex items-center gap-3 mt-2"><FiMapPin /> <span className="text-sm">Indore, Madhya Pradesh</span></div>
+          <div className="flex items-center gap-3">
+            <FiPhone /> <span className="text-sm">+91-8823047856</span>
+          </div>
+          <div className="flex items-center gap-3 mt-2">
+            <FiMail /> <span className="text-sm">kunalsingh7053patel@gmail.com</span>
+          </div>
+          <div className="flex items-center gap-3 mt-2">
+            <FiMapPin /> <span className="text-sm">Indore, Madhya Pradesh</span>
+          </div>
 
-          {/* SOCIALS WITH ICONS */}
+          {/* SOCIALS */}
           <div className="mt-4 flex gap-4 items-center">
             <a
               href="https://www.linkedin.com/in/kunal-patel-020b19285/"
@@ -42,21 +49,40 @@ export default function Contact(){
           </div>
         </div>
 
-        {/* CONTACT FORM */}
+        {/* CONTACT FORM — NETLIFY READY */}
         <motion.form
+          name="contact"
+          method="POST"
+          data-netlify="true"
           onSubmit={handleSubmit}
-          initial={{opacity:0}}
-          whileInView={{opacity:1}}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           className="space-y-3"
         >
-          <input required name="name" placeholder="Your name"
-            className="w-full p-3 rounded-md bg-black/3 dark:bg-white/3 text-slate-900 dark:text-slate-100"
+          {/* Netlify hidden input */}
+          <input type="hidden" name="form-name" value="contact" />
+
+          <input
+            required
+            name="name"
+            placeholder="Your name"
+            className="w-full p-3 rounded-md bg-black/10 dark:bg-white/10 text-slate-900 dark:text-slate-100"
           />
-          <input required name="email" type="email" placeholder="Email"
-            className="w-full p-3 rounded-md bg-black/3 dark:bg-white/3 text-slate-900 dark:text-slate-100"
+
+          <input
+            required
+            name="email"
+            type="email"
+            placeholder="Email"
+            className="w-full p-3 rounded-md bg-black/10 dark:bg-white/10 text-slate-900 dark:text-slate-100"
           />
-          <textarea required name="message" placeholder="Message" rows={4}
-            className="w-full p-3 rounded-md bg-black/3 dark:bg-white/3 text-slate-900 dark:text-slate-100"
+
+          <textarea
+            required
+            name="message"
+            placeholder="Message"
+            rows={4}
+            className="w-full p-3 rounded-md bg-black/10 dark:bg-white/10 text-slate-900 dark:text-slate-100"
           />
 
           <div className="flex items-center gap-3">
@@ -66,12 +92,12 @@ export default function Contact(){
             >
               Send Message
             </button>
-            {sent && <div className="text-sm text-green-400">Message sent (simulated)</div>}
+            {sent && <div className="text-sm text-green-400">Message sent ✔</div>}
           </div>
         </motion.form>
       </div>
 
-      {/* Google Map */}
+      {/* GOOGLE MAP */}
       <div className="mt-6">
         <h4 className="text-sm font-medium mb-2">Location</h4>
         <div className="w-full h-64 md:h-96 rounded-lg overflow-hidden">
