@@ -4,11 +4,35 @@ import { FiPhone, FiMail, FiMapPin, FiLinkedin, FiGithub } from 'react-icons/fi'
 
 export default function Contact() {
   const [sent, setSent] = useState(false)
+  const [responseMessage, setResponseMessage] = useState("");
 
-  const handleSubmit = () => {
-    setSent(true)
-    setTimeout(() => setSent(false), 3000)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+      });
+
+      // Reset inputs
+      form.reset();
+
+      // Success message
+      setResponseMessage("✅ Thank you! Your message has been sent.");
+
+      // Hide after 5 sec
+      setTimeout(() => setResponseMessage(""), 5000);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setResponseMessage("❌ Oops! Something went wrong.");
+    }
+  };
+  
 
   return (
     <section id="contact" className="mt-12 glass p-6 rounded-2xl">
@@ -50,58 +74,65 @@ export default function Contact() {
         </div>
 
         {/* CONTACT FORM — NETLIFY READY */}
-       <section id="contact-me">
+    <section id="contact-me" className="mt-12 p-6 rounded-2xl glass">
+      <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
 
-  <form 
-    name="contact" 
-    method="POST" 
-    data-netlify="true"
-    className="space-y-4"
-  >
-    {/* Netlify Hidden Input */}
-    <input type="hidden" name="form-name" value="contact" />
-
-    <p className="flex flex-col gap-1">
-      <label className="text-sm font-medium">Your Name:</label>
-      <input 
-        type="text" 
-        name="name" 
-        required
-        className="p-2 rounded-md bg-black/10 dark:bg-white/10"
-      />
-    </p>
-
-    <p className="flex flex-col gap-1">
-      <label className="text-sm font-medium">Your Email:</label>
-      <input 
-        type="email" 
-        name="email" 
-        required
-        className="p-2 rounded-md bg-black/10 dark:bg-white/10"
-      />
-    </p>
-
-    <p className="flex flex-col gap-1">
-      <label className="text-sm font-medium">Message:</label>
-      <textarea 
-        name="message" 
-        required
-        className="p-2 rounded-md bg-black/10 dark:bg-white/10 h-28"
-      />
-    </p>
-
-    <p>
-      <button 
-        type="submit"
-        className="px-4 py-2 rounded-md bg-accent text-black font-medium hover:scale-105 transition"
+      <form
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        onSubmit={handleSubmit}
+        className="space-y-4"
       >
-        Send
-      </button>
-    </p>
-  </form>
+        {/* Netlify Hidden Input */}
+        <input type="hidden" name="form-name" value="contact" />
 
-  <div id="responseMessage" style={{display: "none"}}></div>
-</section>
+        <p className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Your Name:</label>
+          <input
+            type="text"
+            name="name"
+            required
+            className="p-2 rounded-md bg-black/10 dark:bg-white/10"
+          />
+        </p>
+
+        <p className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Your Email:</label>
+          <input
+            type="email"
+            name="email"
+            required
+            className="p-2 rounded-md bg-black/10 dark:bg-white/10"
+          />
+        </p>
+
+        <p className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Message:</label>
+          <textarea
+            name="message"
+            required
+            className="p-2 rounded-md bg-black/10 dark:bg-white/10 h-28"
+          />
+        </p>
+
+        <p>
+          <button
+            type="submit"
+            className="px-4 py-2 rounded-md bg-accent text-black font-medium hover:scale-105 transition"
+          >
+            Send
+          </button>
+        </p>
+      </form>
+
+      {/* Response Message */}
+      {responseMessage && (
+        <div className="mt-3 text-sm" id="responseMessage">
+          {responseMessage}
+        </div>
+      )}
+    </section>
 
       </div>
 
