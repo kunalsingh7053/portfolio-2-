@@ -93,8 +93,8 @@ export default function Hero() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="glass p-6 rounded-2xl"
-          >
+           className="glass p-4 md:p-6 rounded-2xl max-w-full overflow-hidden">
+
             {/* Top bar (VS Code style) */}
             <div className="flex gap-2 mb-3">
               <span className="w-3 h-3 rounded-full bg-red-400"></span>
@@ -113,7 +113,7 @@ export default function Hero() {
                   `app.get("/api", (req,res) => {\n  res.send("Backend Connected ✔");\n});`,
                   1500,
                 ]}
-                wrapper="pre"
+                wrapper="code"
                 speed={55}
                 repeat={Infinity}
                 cursor={true}
