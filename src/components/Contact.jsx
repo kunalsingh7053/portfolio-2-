@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { FiPhone, FiMail, FiMapPin, FiLinkedin, FiGithub } from 'react-icons/fi'
+import { motion } from 'framer-motion'
+
+const contactParent = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.09 }
+  }
+}
+
+const contactItem = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0 }
+}
 
 export default function Contact() {
   const [sent, setSent] = useState(false)
@@ -12,34 +27,41 @@ export default function Contact() {
   }, [])
 
   return (
-    <section id="contact" className="mt-12 glass p-6 rounded-2xl">
-      <h3 className="text-xl font-semibold mb-4">Contact</h3>
+    <motion.section
+      id="contact"
+      className="mt-12 glass p-6 rounded-2xl section-reveal"
+      variants={contactParent}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <motion.h3 variants={contactItem} className="text-2xl font-semibold mb-4">Contact</motion.h3>
 
       {/* THANK YOU PAGE */}
       {sent ? (
-        <div className="text-center py-20">
+        <motion.div variants={contactItem} className="text-center py-20">
           <h2 className="text-3xl font-bold text-accent">Thank You! 🎉</h2>
           <p className="mt-3 text-sm opacity-80">
             Your message has been sent successfully. I will get back to you soon.
           </p>
-        </div>
+        </motion.div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <motion.div variants={contactItem} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             {/* LEFT SIDE */}
-            <div>
-              <div className="flex items-center gap-3">
+            <motion.div variants={contactItem}>
+              <motion.div whileHover={{ x: 4 }} className="flex items-center gap-3">
                 <FiPhone /> <span className="text-sm">+91-8823047856</span>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-3 mt-2">
+              <motion.div whileHover={{ x: 4 }} className="flex items-center gap-3 mt-2">
                 <FiMail /> <span className="text-sm">kunalsingh7053patel@gmail.com</span>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-3 mt-2">
+              <motion.div whileHover={{ x: 4 }} className="flex items-center gap-3 mt-2">
                 <FiMapPin /> <span className="text-sm">Indore, Madhya Pradesh</span>
-              </div>
+              </motion.div>
 
               <div className="mt-4 flex gap-4 items-center">
                 <a
@@ -60,10 +82,10 @@ export default function Contact() {
                   <FiGithub className="text-lg" /> GitHub
                 </a>
               </div>
-            </div>
+            </motion.div>
 
             {/* RIGHT SIDE — FORM */}
-            <div className="glass p-6 rounded-2xl">
+            <motion.div variants={contactItem} className="glass p-6 rounded-2xl" whileHover={{ y: -3 }}>
               <h2 className="text-xl font-semibold mb-4">Send a Message</h2>
 
               <form
@@ -83,47 +105,52 @@ export default function Contact() {
 
                 <p className="flex flex-col gap-1">
                   <label className="text-sm font-medium">Your Name:</label>
-                  <input
+                  <motion.input
                     type="text"
                     name="name"
                     required
                     className="p-2 rounded-md bg-black/10 dark:bg-white/10"
+                    whileFocus={{ scale: 1.01 }}
                   />
                 </p>
 
                 <p className="flex flex-col gap-1">
                   <label className="text-sm font-medium">Your Email:</label>
-                  <input
+                  <motion.input
                     type="email"
                     name="email"
                     required
                     className="p-2 rounded-md bg-black/10 dark:bg-white/10"
+                    whileFocus={{ scale: 1.01 }}
                   />
                 </p>
 
                 <p className="flex flex-col gap-1">
                   <label className="text-sm font-medium">Message:</label>
-                  <textarea
+                  <motion.textarea
                     name="message"
                     required
                     className="p-2 rounded-md bg-black/10 dark:bg-white/10 h-28"
+                    whileFocus={{ scale: 1.01 }}
                   />
                 </p>
 
-                <button
+                <motion.button
                   type="submit"
-                  className="px-4 py-2 rounded-md bg-accent text-black font-medium hover:scale-105 transition"
+                  className="px-4 py-2 rounded-md bg-accent text-white font-medium"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   Send
-                </button>
+                </motion.button>
               </form>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* GOOGLE MAP */}
-          <div className="mt-6">
+          <motion.div variants={contactItem} className="mt-6">
             <h4 className="text-sm font-medium mb-2">Location</h4>
-            <div className="w-full h-64 md:h-96 rounded-lg overflow-hidden">
+            <motion.div className="w-full h-64 md:h-96 rounded-lg overflow-hidden" whileHover={{ y: -2 }}>
               <iframe
                 title="Chanakyapuri Square map"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2665.0643206718837!2d75.83513650918945!3d22.682110729328045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fc441fe33cc3%3A0x6e39ead25d6fb351!2sChanakyapuri%2C%20Indore%2C%20Madhya%20Pradesh%20452009!5e1!3m2!1sen!2sin!4v1764237305439!5m2!1sen!2sin"
@@ -131,10 +158,10 @@ export default function Contact() {
                 allowFullScreen
                 loading="lazy"
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </>
       )}
-    </section>
+    </motion.section>
   )
 }

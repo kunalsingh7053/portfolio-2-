@@ -1,6 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+const sectionAnim = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const cardAnim = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0 },
+};
+
 // FRONTEND PROJECTS
 const frontendProjects = [
   {
@@ -77,6 +91,13 @@ const frontendProjects = [
 // BACKEND + FULL-STACK + AI PROJECTS
 const backendProjects = [
   {
+    title: "Hostel Hub",
+    type: "Front-End + Backend",
+    desc: "Hostel management system for students and wardens to handle complaints, attendance, and hostel menu digitally with Admin, Warden, and Student panels.",
+    tech: "Front-End Web Development, MongoDB, Node.js, Express.js, Bcrypt.js",
+    link: "https://hoostelhub.netlify.app/",
+  },
+  {
     title: "Fast Translator",
     type: "Full-Stack",
     desc: "Google AI translation, Auth, Cloud Storage, Responsive UI.",
@@ -117,16 +138,23 @@ const backendProjects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="mt-12">
+    <section id="projects" className="mt-14 section-reveal">
 
       {/* FRONTEND SECTION */}
-      <h3 className="text-xl font-semibold mb-4">Frontend Projects</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <h3 className="text-2xl font-semibold mb-5">Frontend Projects</h3>
+      <motion.div
+        variants={sectionAnim}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
+      >
         {frontendProjects.map((p) => (
           <motion.div
             key={p.title}
-            whileHover={{ y: -6 }}
-            className="glass p-5 rounded-2xl"
+            variants={cardAnim}
+            whileHover={{ y: -8, scale: 1.01 }}
+            className="glass p-5 rounded-2xl flex flex-col"
           >
             <h4 className="text-lg font-bold">
               {p.title}{" "}
@@ -134,16 +162,17 @@ export default function Projects() {
                 — {p.type}
               </span>
             </h4>
-            <p className="mt-2 text-slate-700 dark:text-slate-300">{p.desc}</p>
+            <p className="mt-2 text-slate-700 dark:text-slate-300 leading-relaxed">{p.desc}</p>
             <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
               Tech: {p.tech}
             </p>
 
-            <div className="mt-4 flex gap-4 text-sm">
+            <div className="mt-5 flex flex-wrap gap-3 text-sm pt-2">
               <a
                 href={p.link}
                 target="_blank"
-                className="text-accent font-semibold"
+                rel="noreferrer"
+                className="inline-flex rounded-md bg-primary/12 px-3 py-1.5 text-red-700 dark:text-red-300 font-semibold"
               >
                 Live ↗
               </a>
@@ -151,7 +180,8 @@ export default function Projects() {
                 <a
                   href={p.repo}
                   target="_blank"
-                  className="text-blue-500 font-semibold"
+                  rel="noreferrer"
+                  className="inline-flex rounded-md bg-accent/12 px-3 py-1.5 text-blue-700 dark:text-blue-300 font-semibold"
                 >
                   Code ↗
                 </a>
@@ -159,16 +189,23 @@ export default function Projects() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* BACKEND SECTION */}
-      <h3 className="text-xl font-semibold mb-4">Full-Stack & Backend Projects</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <h3 className="text-2xl font-semibold mb-5">Full-Stack & Backend Projects</h3>
+      <motion.div
+        variants={sectionAnim}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
         {backendProjects.map((p) => (
           <motion.div
             key={p.title}
-            whileHover={{ y: -6 }}
-            className="glass p-5 rounded-2xl"
+            variants={cardAnim}
+            whileHover={{ y: -8, scale: 1.01 }}
+            className="glass p-5 rounded-2xl flex flex-col"
           >
             <h4 className="text-lg font-bold">
               {p.title}
@@ -177,16 +214,17 @@ export default function Projects() {
                 — {p.type}
               </span>
             </h4>
-            <p className="mt-2 text-slate-700 dark:text-slate-300">{p.desc}</p>
+            <p className="mt-2 text-slate-700 dark:text-slate-300 leading-relaxed">{p.desc}</p>
             <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
               Tech: {p.tech}
             </p>
 
-            <div className="mt-4 flex gap-4 text-sm">
+            <div className="mt-5 flex flex-wrap gap-3 text-sm pt-2">
               <a
                 href={p.link}
                 target="_blank"
-                className="text-accent font-semibold"
+                rel="noreferrer"
+                className="inline-flex rounded-md bg-primary/12 px-3 py-1.5 text-red-700 dark:text-red-300 font-semibold"
               >
                 Live ↗
               </a>
@@ -194,7 +232,8 @@ export default function Projects() {
                 <a
                   href={p.repo}
                   target="_blank"
-                  className="text-blue-500 font-semibold"
+                  rel="noreferrer"
+                  className="inline-flex rounded-md bg-accent/12 px-3 py-1.5 text-blue-700 dark:text-blue-300 font-semibold"
                 >
                   Code ↗
                 </a>
@@ -202,7 +241,7 @@ export default function Projects() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

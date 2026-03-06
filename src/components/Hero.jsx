@@ -17,22 +17,22 @@ const item = {
 
 export default function Hero() {
   return (
-    <section id="home" className="min-h-[72vh] flex items-center container">
+    <section id="home" className="min-h-[80vh] flex items-center container section-reveal">
       <motion.div
-        className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+        className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center"
         variants={container}
         initial="hidden"
         animate="show"
       >
         {/* LEFT SIDE */}
         <div>
-          <motion.p variants={item} className="text-sm text-accent font-medium">
-            Hello — Welcome
+          <motion.p variants={item} className="inline-flex rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs md:text-sm text-red-700 dark:text-red-300 font-medium">
+            Web-Slinger Inspired Portfolio
           </motion.p>
 
           <motion.h1
             variants={item}
-            className="mt-4 text-4xl md:text-5xl font-extrabold leading-tight"
+            className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08]"
           >
             Hi, I'm{" "}
             <motion.span
@@ -51,28 +51,34 @@ export default function Hero() {
 
           <motion.p
             variants={item}
-            className="mt-3 text-lg text-slate-700 dark:text-slate-300"
+            className="mt-4 max-w-xl text-base sm:text-lg text-slate-700 dark:text-slate-300"
           >
-            Full-Stack Developer | AI Integrations | React & NodeJS
+            Full-Stack Developer building production-ready web apps with AI integrations, polished frontend systems, and scalable Node.js backends.
           </motion.p>
 
+          <motion.div variants={item} className="mt-4 flex flex-wrap gap-2 text-xs sm:text-sm">
+            <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1">React + Node</span>
+            <span className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1">AI Integrations</span>
+            <span className="rounded-full border border-slate-400/30 bg-white/50 dark:bg-white/5 px-3 py-1">Responsive UI</span>
+          </motion.div>
+
           {/* BUTTONS */}
-          <motion.div variants={item} className="mt-6 flex gap-3">
+          <motion.div variants={item} className="mt-7 flex flex-wrap gap-3">
             <motion.a
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
               href="#projects"
-              className="px-5 py-2 rounded-md bg-primary text-black font-semibold transition"
+              className="px-5 py-2.5 rounded-lg bg-primary text-white font-semibold transition shadow-md shadow-red-500/30"
             >
               View Projects
             </motion.a>
 
             <motion.a
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
               href="/resume.pdf"
               download
-              className="px-5 py-2 rounded-md border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5"
+              className="px-5 py-2.5 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5"
             >
               Download Resume
             </motion.a>
@@ -93,7 +99,7 @@ export default function Hero() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-           className="glass p-4 md:p-6 rounded-2xl max-w-full overflow-hidden">
+           className="glass p-4 md:p-6 rounded-2xl max-w-full overflow-hidden border border-accent/25">
 
             {/* Top bar (VS Code style) */}
             <div className="flex gap-2 mb-3">
@@ -103,7 +109,7 @@ export default function Hero() {
             </div>
 
             {/* Auto Coding Animation */}
-            <div className="font-mono text-sm text-slate-800 dark:text-slate-100">
+            <div className="font-mono text-xs sm:text-sm text-slate-800 dark:text-slate-100">
               <TypeAnimation
                 sequence={[
                   `function greet() {\n  return "Hello, I'm Kunal 👋";\n}`,

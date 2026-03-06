@@ -2,6 +2,20 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { SiHtml5, SiCss3, SiTailwindcss, SiJavascript, SiReact, SiRedux, SiNodedotjs, SiExpress, SiMongodb, SiGit, SiGithub, SiFramer, SiGoogle, SiGoogledrive } from 'react-icons/si'
 
+const cardParent = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.1 }
+  }
+}
+
+const cardChild = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0 }
+}
+
 const groups = [
   {title:'Frontend', items:[
     {name:'HTML', icon: SiHtml5, color:'text-orange-500'},
@@ -35,20 +49,32 @@ const groups = [
 function SkillPill({item}){
   const Icon = item.icon
   return (
-    <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 dark:bg-white/5 text-sm shadow-sm" title={item.name}>
+    <motion.span
+      whileHover={{ y: -3, scale: 1.04 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 17 }}
+      className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 dark:bg-white/5 text-sm shadow-sm"
+      title={item.name}
+    >
       {Icon ? <Icon className={`${item.color} w-4 h-4`} /> : null}
       <span className="whitespace-nowrap text-slate-800 dark:text-slate-100">{item.name}</span>
-    </span>
+    </motion.span>
   )
 }
 
 export default function Skills(){
   return (
-    <section id="skills" className="mt-10">
-      <h3 className="text-xl font-semibold mb-4">Skills</h3>
+    <motion.section
+      id="skills"
+      className="mt-10 section-reveal"
+      variants={cardParent}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <motion.h3 variants={cardChild} className="text-2xl font-semibold mb-4">Skills</motion.h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {groups.map(g=> (
-          <motion.div key={g.title} className="glass p-4 rounded-xl" whileHover={{scale:1.02}}>
+          <motion.div key={g.title} variants={cardChild} className="glass p-4 rounded-xl" whileHover={{scale:1.02, y:-4}}>
             <h4 className="font-semibold">{g.title}</h4>
             <div className="mt-3 flex flex-wrap gap-3">
               {g.items.map(i=> <SkillPill key={i.name} item={i} />)}
@@ -56,6 +82,6 @@ export default function Skills(){
           </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   )
 }

@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#8b5cf6',
-        accent: '#06b6d4'
+        primary: '#ef4444',
+        accent: '#2563eb'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
