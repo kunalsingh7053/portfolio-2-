@@ -68,6 +68,34 @@ export default function About(){
               David Goggins
             </p>
           </div>
+
+          <div className="flex items-center gap-3 rounded-xl border border-primary/30 bg-primary/10 p-2.5">
+            <img
+              src="https://i.pinimg.com/736x/f9/29/7a/f9297a75b50f648dff0eca37ab1831aa.jpg"
+              alt="The Silent Patient book cover"
+              loading="lazy"
+              className="h-16 w-12 rounded-md object-cover"
+            />
+            <p className="text-sm text-red-700 dark:text-red-300">
+              <span className="font-semibold">The Silent Patient</span>
+              <br />
+              Alex Michaelides
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 p-2.5">
+            <img
+              src="https://i.pinimg.com/736x/e6/7b/5a/e67b5a02fd88be9ea7790b3ee13e9ad6.jpg"
+              alt="Dhayan Sutra book cover"
+              loading="lazy"
+              className="h-16 w-12 rounded-md object-cover"
+            />
+            <p className="text-sm text-blue-700 dark:text-blue-300">
+              <span className="font-semibold">Dhayan Sutra</span>
+              <br />
+              Osho
+            </p>
+          </div>
         </div>
       </motion.div>
       <motion.div variants={aboutItem} className="mt-4">
