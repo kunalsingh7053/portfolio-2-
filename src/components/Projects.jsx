@@ -15,10 +15,33 @@ const cardAnim = {
   show: { opacity: 1, y: 0 },
 };
 
+const getProjectThumb = (title, type) => {
+  const svg = `
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 420'>
+      <defs>
+        <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
+          <stop offset='0%' stop-color='#dc2626' />
+          <stop offset='52%' stop-color='#2563eb' />
+          <stop offset='100%' stop-color='#0f172a' />
+        </linearGradient>
+      </defs>
+      <rect width='800' height='420' fill='url(#bg)' />
+      <circle cx='690' cy='78' r='120' fill='rgba(255,255,255,0.12)' />
+      <circle cx='140' cy='360' r='150' fill='rgba(255,255,255,0.08)' />
+      <text x='52' y='170' fill='white' font-family='Segoe UI, Arial, sans-serif' font-size='38' font-weight='700'>${title}</text>
+      <text x='52' y='220' fill='rgba(255,255,255,0.9)' font-family='Segoe UI, Arial, sans-serif' font-size='24'>${type}</text>
+      <rect x='52' y='254' width='160' height='34' rx='17' fill='rgba(255,255,255,0.18)' />
+      <text x='80' y='277' fill='white' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600'>PROJECT</text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+};
+
 // FRONTEND PROJECTS
 const frontendProjects = [
   {
-    title: "Youthiapa Clone",
+    title: "Youthiapa ",
     type: "Frontend UI",
     desc: "Fully responsive e-commerce design with smooth UI & animations.",
     tech: "HTML, CSS, JS, Tailwind",
@@ -137,6 +160,11 @@ const backendProjects = [
 ];
 
 export default function Projects() {
+  const openProject = (link) => {
+    if (!link) return;
+    window.open(link, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <section id="projects" className="mt-14 section-reveal">
 
@@ -154,8 +182,32 @@ export default function Projects() {
             key={p.title}
             variants={cardAnim}
             whileHover={{ y: -8, scale: 1.01 }}
-            className="glass p-5 rounded-2xl flex flex-col"
+            onClick={() => openProject(p.link)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openProject(p.link);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            data-cursor="project"
+            className="group relative glass p-5 rounded-2xl flex flex-col cursor-pointer"
           >
+            <div className="relative mb-4 overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
+              <img
+                src={getProjectThumb(p.title, p.type)}
+                alt={`${p.title} thumbnail`}
+                loading="lazy"
+                className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              />
+              <motion.div
+                animate={{ x: ['-120%', '140%'] }}
+                transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 0.8, ease: 'linear' }}
+                className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/35 to-transparent"
+                aria-hidden
+              />
+            </div>
             <h4 className="text-lg font-bold">
               {p.title}{" "}
               <span className="text-sm text-slate-600 dark:text-slate-300">
@@ -172,6 +224,7 @@ export default function Projects() {
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="inline-flex rounded-md bg-primary/12 px-3 py-1.5 text-red-700 dark:text-red-300 font-semibold"
               >
                 Live ↗
@@ -181,6 +234,7 @@ export default function Projects() {
                   href={p.repo}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   className="inline-flex rounded-md bg-accent/12 px-3 py-1.5 text-blue-700 dark:text-blue-300 font-semibold"
                 >
                   Code ↗
@@ -205,8 +259,32 @@ export default function Projects() {
             key={p.title}
             variants={cardAnim}
             whileHover={{ y: -8, scale: 1.01 }}
-            className="glass p-5 rounded-2xl flex flex-col"
+            onClick={() => openProject(p.link)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openProject(p.link);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            data-cursor="project"
+            className="group relative glass p-5 rounded-2xl flex flex-col cursor-pointer"
           >
+            <div className="relative mb-4 overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
+              <img
+                src={getProjectThumb(p.title, p.type)}
+                alt={`${p.title} thumbnail`}
+                loading="lazy"
+                className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              />
+              <motion.div
+                animate={{ x: ['-120%', '140%'] }}
+                transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 0.8, ease: 'linear' }}
+                className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/35 to-transparent"
+                aria-hidden
+              />
+            </div>
             <h4 className="text-lg font-bold">
               {p.title}
               <span className="text-sm text-slate-600 dark:text-slate-300">
@@ -224,6 +302,7 @@ export default function Projects() {
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="inline-flex rounded-md bg-primary/12 px-3 py-1.5 text-red-700 dark:text-red-300 font-semibold"
               >
                 Live ↗
@@ -233,6 +312,7 @@ export default function Projects() {
                   href={p.repo}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   className="inline-flex rounded-md bg-accent/12 px-3 py-1.5 text-blue-700 dark:text-blue-300 font-semibold"
                 >
                   Code ↗

@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 import { FiMenu, FiX } from "react-icons/fi";
 
 export default function Navbar() {
   const [active, setActive] = useState("home");
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const navItems = [
+    { id: "projects", label: "Projects" },
+    { id: "skills", label: "Skills" },
+    { id: "contact", label: "Contact" },
+  ];
 
   // Track scroll to update active section
   useEffect(() => {
@@ -19,8 +26,11 @@ export default function Navbar() {
 
         if (top <= 150 && top >= -200) setActive(id);
       });
+
+      setIsScrolled(window.scrollY > 14);
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -35,8 +45,10 @@ export default function Navbar() {
   }, []);
 
   const linkClass = (id) =>
-    `text-sm pb-1 transition-all ${
-      active === id ? "border-b-2 border-primary" : "hover:underline"
+    `relative inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+      active === id
+        ? "text-primary bg-primary/10"
+        : "text-slate-700 dark:text-slate-200 hover:text-primary"
     }`;
 
   const mobileLinkClass = (id) =>
@@ -51,24 +63,48 @@ export default function Navbar() {
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="fixed left-0 right-0 top-0 z-30 backdrop-blur-md glass"
+      className={`fixed left-0 right-0 top-0 z-30 backdrop-blur-md glass transition-all duration-300 ${
+        isScrolled ? "shadow-lg shadow-slate-900/10 border-b border-black/10 dark:border-white/10" : ""
+      }`}
     >
-      <div className="container flex items-center justify-between py-3">
-        <a href="#home" className="text-lg md:text-xl font-semibold tracking-wide brand-heading text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+      <div className={`container flex items-center justify-between transition-all duration-300 ${isScrolled ? "py-2" : "py-3"}`}>
+        <motion.a
+          href="#home"
+          whileHover={{ y: -1 }}
+          className="text-lg md:text-xl font-semibold tracking-wide brand-heading text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent"
+        >
           KP — Kunal Patel
-        </a>
+        </motion.a>
 
         <div className="hidden md:flex items-center gap-4">
-          <a href="#projects" className={linkClass("projects")}>Projects</a>
-          <a href="#skills" className={linkClass("skills")}>Skills</a>
-          <a href="#contact" className={linkClass("contact")}>Contact</a>
+          {navItems.map((item) => (
+            <motion.a
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={() => setActive(item.id)}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className={linkClass(item.id)}
+            >
+              {item.label}
+              {active === item.id && (
+                <motion.span
+                  layoutId="nav-active-pill"
+                  className="absolute inset-0 -z-10 rounded-full border border-primary/20"
+                  transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                />
+              )}
+            </motion.a>
+          ))}
 
-          <a
+          <motion.a
             href="/resume.pdf"
-            className="hidden md:inline-block text-sm bg-primary px-3 py-1 rounded-md text-white font-medium"
+            whileHover={{ y: -2, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="hidden md:inline-block text-sm bg-primary px-3 py-1 rounded-md text-white font-medium shadow-md shadow-primary/30"
           >
             Resume
-          </a>
+          </motion.a>
 
           <ThemeToggle />
         </div>
@@ -81,32 +117,52 @@ export default function Navbar() {
             aria-label={open ? "Close menu" : "Open menu"}
             className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-black/10 dark:border-white/10"
           >
-            {open ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
+            <motion.span
+              animate={{ rotate: open ? 90 : 0, scale: open ? 1.08 : 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 18 }}
+            >
+              {open ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
+            </motion.span>
           </button>
         </div>
       </div>
 
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="md:hidden border-t border-black/10 dark:border-white/10"
-        >
-          <div className="container py-3 grid gap-2">
-            <a href="#projects" className={mobileLinkClass("projects")} onClick={() => setOpen(false)}>Projects</a>
-            <a href="#skills" className={mobileLinkClass("skills")} onClick={() => setOpen(false)}>Skills</a>
-            <a href="#contact" className={mobileLinkClass("contact")} onClick={() => setOpen(false)}>Contact</a>
-            <a
-              href="/resume.pdf"
-              className="mt-1 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white"
-              onClick={() => setOpen(false)}
-            >
-              Resume
-            </a>
-          </div>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.22 }}
+            className="md:hidden border-t border-black/10 dark:border-white/10"
+          >
+            <div className="container py-3 grid gap-2">
+              {navItems.map((item) => (
+                <motion.a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={mobileLinkClass(item.id)}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setActive(item.id);
+                    setOpen(false);
+                  }}
+                >
+                  {item.label}
+                </motion.a>
+              ))}
+              <motion.a
+                href="/resume.pdf"
+                className="mt-1 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white"
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setOpen(false)}
+              >
+                Resume
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

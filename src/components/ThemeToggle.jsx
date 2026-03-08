@@ -6,10 +6,10 @@ export default function ThemeToggle(){
     try {
       const saved = localStorage.getItem('theme')
       if (saved) return saved
-      // fallback to system preference
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      // default for first-time visitors
+      return 'dark'
     } catch (e) {
-      return 'light'
+      return 'dark'
     }
   })
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 
 const container = {
@@ -16,8 +16,50 @@ const item = {
 };
 
 export default function Hero() {
+  const sectionRef = React.useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const photoY = useTransform(scrollYProgress, [0, 1], [24, -24]);
+
+  const speakIntro = React.useCallback(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+    const voices = window.speechSynthesis.getVoices();
+    const preferredKeys = ["google us english", "microsoft david", "microsoft mark", "zira", "samantha"];
+    const selectedVoice =
+      voices.find((voice) => {
+        const name = `${voice.name} ${voice.voiceURI}`.toLowerCase();
+        return preferredKeys.some((key) => name.includes(key));
+      }) || voices.find((voice) => voice.lang?.toLowerCase().startsWith("en")) || null;
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(
+      "Hello, I am Kunal Patel, a web developer from Medi-Caps University."
+    );
+
+    if (selectedVoice) utterance.voice = selectedVoice;
+
+    // Slightly lower pitch and controlled rate for a futuristic assistant tone.
+    utterance.rate = 0.92;
+    utterance.pitch = 0.68;
+    utterance.volume = 1;
+    utterance.lang = "en-IN";
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
   return (
-    <section id="home" className="min-h-[80vh] flex items-center container section-reveal">
+    <section ref={sectionRef} id="home" className="relative overflow-hidden min-h-[80vh] flex items-center container section-reveal">
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: [0.25, 0.5, 0.25], y: [0, -8, 0], x: [0, 14, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute left-2 sm:left-6 top-8 sm:top-12 text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-slate-200/50 dark:text-slate-800/40 select-none"
+      >
+        KUNAL PATEL
+      </motion.p>
+
       <motion.div
         className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center"
         variants={container}
@@ -32,7 +74,7 @@ export default function Hero() {
 
           <motion.h1
             variants={item}
-            className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08]"
+            className="hero-target-heading mt-5 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08]"
           >
             Hi, I'm{" "}
             <motion.span
@@ -43,11 +85,34 @@ export default function Hero() {
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent bg-[length:200%_200%]"
+              className="target-lock text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent bg-[length:200%_200%]"
             >
-              Kunal Patel
+              Web Developer
             </motion.span>
           </motion.h1>
+
+          <motion.div
+            variants={item}
+            className="mt-6 w-full max-w-md"
+          >
+            <motion.img
+              style={{ y: photoY }}
+              src="/kunal.png"
+              alt="Kunal Patel"
+              data-cursor="hero-photo"
+              onClick={speakIntro}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  speakIntro();
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              title="Click to activate AI intro voice"
+              className="w-full h-[320px] sm:h-[420px] object-cover rounded-xl border border-black/10 dark:border-transparent shadow-2xl shadow-slate-900/20 cursor-pointer transition-transform duration-200 hover:scale-[1.01] active:scale-[0.99] focus:outline-none"
+            />
+          </motion.div>
 
           <motion.p
             variants={item}

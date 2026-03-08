@@ -13,12 +13,15 @@ import CursorCircle from './components/CursorCircle'
 import ScrollProgress from './components/ScrollProgress'
 import SpiderSwing from './components/SpiderSwing'
 import ComicTicker from './components/ComicTicker'
+import ReactClickBurst from './components/ReactClickBurst'
+import PortfolioChatbot from './components/PortfolioChatbot'
 
 export default function App(){
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       <ScrollProgress />
       <CursorCircle />
+      <ReactClickBurst />
       <div className="web-swing" aria-hidden />
       <div className="site-bg fixed inset-0 -z-20 pointer-events-none" aria-hidden />
       <div className="bg-shapes" aria-hidden>
@@ -41,6 +44,7 @@ export default function App(){
         </section>
       </main>
       <Footer />
+      <PortfolioChatbot />
       <BackToTop />
     </div>
   )
