@@ -1,20 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const sectionAnim = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const cardAnim = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0 },
-};
-
 const getProjectThumb = (title, type) => {
   const svg = `
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 420'>
@@ -170,17 +156,11 @@ export default function Projects() {
 
       {/* FRONTEND SECTION */}
       <h3 className="text-2xl font-semibold mb-5">Frontend Projects</h3>
-      <motion.div
-        variants={sectionAnim}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         {frontendProjects.map((p) => (
           <motion.div
             key={p.title}
-            variants={cardAnim}
+            initial={false}
             whileHover={{ y: -8, scale: 1.01 }}
             onClick={() => openProject(p.link)}
             onKeyDown={(e) => {
@@ -243,21 +223,15 @@ export default function Projects() {
             </div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
 
       {/* BACKEND SECTION */}
       <h3 className="text-2xl font-semibold mb-5">Full-Stack & Backend Projects</h3>
-      <motion.div
-        variants={sectionAnim}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {backendProjects.map((p) => (
           <motion.div
             key={p.title}
-            variants={cardAnim}
+            initial={false}
             whileHover={{ y: -8, scale: 1.01 }}
             onClick={() => openProject(p.link)}
             onKeyDown={(e) => {
@@ -321,7 +295,7 @@ export default function Projects() {
             </div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }
