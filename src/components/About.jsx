@@ -38,6 +38,16 @@ export default function About(){
       <motion.p variants={aboutItem} className="mt-3 text-slate-700 dark:text-slate-300 leading-relaxed">
         Passionate and motivated developer with hands-on experience in Full-Stack Web Development, AI Integration, Backend APIs, Cloud Hosting, MongoDB, and modern UI/UX. Focused on creating real, working projects with clean code and smooth user experience. Quick learner with strong problem-solving abilities. Always building, learning, and upgrading.
       </motion.p>
+      <motion.div variants={aboutItem} className="about-sound-wave mt-4" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </motion.div>
       <motion.div variants={aboutItem} className="mt-4">
         <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Favorite Books</p>
         <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -94,6 +104,20 @@ export default function About(){
               <span className="font-semibold">Dhayan Sutra</span>
               <br />
               Osho
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 rounded-xl border border-primary/30 bg-primary/10 p-2.5">
+            <img
+              src="https://i.pinimg.com/736x/35/b4/ec/35b4eca904aa42519461f995108ebb0d.jpg"
+              alt="Ikigai book cover"
+              loading="lazy"
+              className="h-16 w-12 rounded-md object-cover"
+            />
+            <p className="text-sm text-red-700 dark:text-red-300">
+              <span className="font-semibold">Ikigai</span>
+              <br />
+              Hector Garcia and Francesc Miralles
             </p>
           </div>
         </div>

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -15,10 +16,27 @@ import SpiderSwing from './components/SpiderSwing'
 import ComicTicker from './components/ComicTicker'
 import ReactClickBurst from './components/ReactClickBurst'
 import PortfolioChatbot from './components/PortfolioChatbot'
+import HelloIntro from './components/HelloIntro'
+import FavoriteMusic from './components/FavoriteMusic'
 
 export default function App(){
+  const [showIntro, setShowIntro] = useState(false)
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (reducedMotion) return
+
+    setShowIntro(true)
+  }, [])
+
+  const handleIntroComplete = () => {
+    setShowIntro(false)
+  }
+
   return (
     <div className="min-h-screen relative overflow-x-hidden">
+      <AnimatePresence>{showIntro ? <HelloIntro onComplete={handleIntroComplete} /> : null}</AnimatePresence>
       <ScrollProgress />
       <CursorCircle />
       <ReactClickBurst />
@@ -34,6 +52,7 @@ export default function App(){
         <Hero />
         <SpiderSwing />
         <ComicTicker />
+        <FavoriteMusic />
         <section className="container py-16">
           <About />
           <Skills />

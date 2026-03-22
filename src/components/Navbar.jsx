@@ -10,13 +10,14 @@ export default function Navbar() {
 
   const navItems = [
     { id: "projects", label: "Projects" },
+    { id: "music", label: "Music" },
     { id: "skills", label: "Skills" },
     { id: "contact", label: "Contact" },
   ];
 
   // Track scroll to update active section
   useEffect(() => {
-    const sections = ["home", "projects", "skills", "contact"];
+    const sections = ["home", "projects", "music", "skills", "contact"];
 
     const handleScroll = () => {
       sections.forEach((id) => {
