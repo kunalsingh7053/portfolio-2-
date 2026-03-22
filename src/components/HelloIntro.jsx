@@ -1,10 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const GREETINGS = ['Hello', 'Namaste', 'Hola', 'Bonjour', 'Konnichiwa']
+const GREETINGS = [
+  'नमस्ते',
+  'السلام علیکم',
+  'Hola',
+  'こんにちは',
+  '안녕하세요'
+]
 const NAME_LINE = "I'm Kunal Singh Patel"
 
-export default function HelloIntro({ onComplete }) {
+export default function HelloIntro({ onComplete, reducedMotion = false }) {
   const [phase, setPhase] = useState('greet')
   const [wordIndex, setWordIndex] = useState(0)
   const [typedCount, setTypedCount] = useState(0)
@@ -18,16 +24,16 @@ export default function HelloIntro({ onComplete }) {
     if (wordIndex >= GREETINGS.length - 1) {
       const toTypeTimer = window.setTimeout(() => {
         setPhase('type')
-      }, 450)
+      }, reducedMotion ? 180 : 450)
       return () => window.clearTimeout(toTypeTimer)
     }
 
     const wordTimer = window.setTimeout(() => {
       setWordIndex(prev => prev + 1)
-    }, 430)
+    }, reducedMotion ? 130 : 430)
 
     return () => window.clearTimeout(wordTimer)
-  }, [phase, wordIndex])
+  }, [phase, wordIndex, reducedMotion])
 
   useEffect(() => {
     if (phase !== 'type') return undefined
@@ -35,16 +41,16 @@ export default function HelloIntro({ onComplete }) {
     if (typedCount < NAME_LINE.length) {
       const typeTimer = window.setTimeout(() => {
         setTypedCount(prev => prev + 1)
-      }, 70)
+      }, reducedMotion ? 24 : 70)
       return () => window.clearTimeout(typeTimer)
     }
 
     const finishTimer = window.setTimeout(() => {
       onComplete?.()
-    }, 800)
+    }, reducedMotion ? 220 : 800)
 
     return () => window.clearTimeout(finishTimer)
-  }, [phase, typedCount, onComplete])
+  }, [phase, typedCount, onComplete, reducedMotion])
 
   return (
     <motion.div

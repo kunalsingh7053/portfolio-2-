@@ -21,11 +21,11 @@ import FavoriteMusic from './components/FavoriteMusic'
 
 export default function App(){
   const [showIntro, setShowIntro] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    if (reducedMotion) return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setReducedMotion(prefersReduced)
 
     setShowIntro(true)
   }, [])
@@ -36,7 +36,7 @@ export default function App(){
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      <AnimatePresence>{showIntro ? <HelloIntro onComplete={handleIntroComplete} /> : null}</AnimatePresence>
+      <AnimatePresence>{showIntro ? <HelloIntro onComplete={handleIntroComplete} reducedMotion={reducedMotion} /> : null}</AnimatePresence>
       <ScrollProgress />
       <CursorCircle />
       <ReactClickBurst />
