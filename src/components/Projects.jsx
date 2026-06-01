@@ -100,6 +100,14 @@ const frontendProjects = [
 // BACKEND + FULL-STACK + AI PROJECTS
 const backendProjects = [
   {
+    title: "IFPC",
+    type: "Final Year Project (BCA)",
+    desc: "Final year project for BCA. Live demo and source linked below.",
+    tech: "HTML, CSS, JavaScript",
+    link: "https://ifpc.netlify.app/",
+    repo: "https://github.com/kunalsingh7053/IFPC",
+  },
+  {
     title: "Hostel Hub",
     type: "Front-End + Backend",
     desc: "Hostel management system for students and wardens to handle complaints, attendance, and hostel menu digitally with Admin, Warden, and Student panels.",
